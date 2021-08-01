@@ -13,8 +13,6 @@ function tokenizeLine(contents: string, lineNr: number) {
 	const tokens: Token[] = [];
 	let cursor = 0;
 
-	console.log(contents, contents.length);
-
 	while (cursor < contents.length) {
 		let char = contents[cursor];
 
@@ -26,7 +24,6 @@ function tokenizeLine(contents: string, lineNr: number) {
 			char === "}" ||
 			char === "+"
 		) {
-			console.log("loop", cursor);
 			cursor++;
 			continue;
 		}
@@ -66,11 +63,11 @@ function tokenizeLine(contents: string, lineNr: number) {
 			continue;
 		}
 
-		const NUMBERS = /[0-9]/;
-		if (NUMBERS.test(char)) {
+		const numbers = /[0-9]/;
+		if (numbers.test(char)) {
 			let value = "";
 
-			while (NUMBERS.test(char)) {
+			while (numbers.test(char)) {
 				value += char;
 				char = contents[++cursor];
 			}
@@ -87,7 +84,7 @@ function tokenizeLine(contents: string, lineNr: number) {
 		if (letters.test(char)) {
 			let value = "";
 
-			while (letters.test(char)) {
+			while (char && letters.test(char)) {
 				value += char;
 				char = contents[++cursor];
 			}
