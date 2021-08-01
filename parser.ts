@@ -9,16 +9,32 @@ export interface Token {
 	value: string;
 }
 
-function tokenizeLine(contents: string, line: number) {
+function tokenizeLine(contents: string, lineNr: number) {
 	const tokens: Token[] = [];
 	let cursor = 0;
+
+	console.log(contents, contents.length);
 
 	while (cursor < contents.length) {
 		let char = contents[cursor];
 
+		if (
+			char === "(" ||
+			char === ")" ||
+			char === "," ||
+			char === "{" ||
+			char === "}" ||
+			char === "+"
+		) {
+			console.log("loop", cursor);
+			cursor++;
+			continue;
+		}
+
 		if (char === "/") {
 			const peek = contents[cursor + 1];
 
+			// A comment
 			if (peek === "/") {
 				return tokens;
 			}
@@ -84,7 +100,7 @@ function tokenizeLine(contents: string, line: number) {
 			continue;
 		}
 
-		throw new TypeError(`stupid baka syntax error at ${char} on line ${line}`);
+		throw new TypeError(`stupid baka syntax error at ${char} on line ${lineNr}`);
 	}
 
 	return tokens;
@@ -97,7 +113,8 @@ export function parse(file: string) {
 
 	for (let line = 1; line <= lines.length; line++) {
 		const contents = lines[line - 1];
-		tokens.push(...tokenizeLine(contents, line));
+		const lineTokens = tokenizeLine(contents, line);
+		tokens.push(...lineTokens);
 	}
 
 	return tokens;
