@@ -1,9 +1,9 @@
 const int age = 2
-const int age2 = 3
+const int age_two = 3
 
 // Hey, this is a comment!
 func add(int a, int b) {
   return a + b
 }
 
-print(add(age, age2))
+print(add(age, age_two))

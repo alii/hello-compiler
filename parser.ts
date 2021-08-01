@@ -80,7 +80,7 @@ function tokenizeLine(contents: string, lineNr: number) {
 			continue;
 		}
 
-		const letters = /[a-z]/i;
+		const letters = /[a-z_]/i;
 		if (letters.test(char)) {
 			let value = "";
 
