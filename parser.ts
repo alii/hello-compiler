@@ -1,12 +1,29 @@
 export const enum Tokens {
-	NAME = "nam",
-	ASSIGNMENT = "ass",
-	NUMBER = "num",
+	NAME,
+	ASSIGNMENT,
+	NUMBER,
 
 	// Operators
-	OPERATOR_ADD = "add",
-	OPERATOR_SUBTRACT = "sub",
+	OPERATOR_ADD,
+	OPERATOR_SUBTRACT,
+
+	// Punctuation
+	PAREN_LEFT,
+	PAREN_RIGHT,
+	COMMA,
+	BRACE_LEFT,
+	BRACE_RIGHT,
 }
+
+const SPECIAL_CHAR_MAP: Record<string, Tokens> = {
+	"(": Tokens.PAREN_LEFT,
+	")": Tokens.PAREN_RIGHT,
+	",": Tokens.COMMA,
+	"{": Tokens.BRACE_LEFT,
+	"}": Tokens.BRACE_RIGHT,
+};
+
+const specialCharMapKeys = Object.keys(SPECIAL_CHAR_MAP);
 
 export interface Token {
 	type: Tokens;
@@ -22,17 +39,18 @@ function tokenizeLine(contents: string, lineNr: number) {
 
 		if (char === "-") {
 			cursor++;
-			tokens.push({ type: Tokens.OPERATOR_SUBTRACT });
+			tokens.push({type: Tokens.OPERATOR_SUBTRACT});
 			continue;
 		}
 
 		if (char === "+") {
 			cursor++;
-			tokens.push({ type: Tokens.OPERATOR_ADD });
+			tokens.push({type: Tokens.OPERATOR_ADD});
 			continue;
 		}
 
-		if (char === "(" || char === ")" || char === "," || char === "{" || char === "}") {
+		if (specialCharMapKeys.includes(char)) {
+			tokens.push({type: SPECIAL_CHAR_MAP[char]});
 			cursor++;
 			continue;
 		}
@@ -98,15 +116,14 @@ function tokenizeLine(contents: string, lineNr: number) {
 				char = contents[++cursor];
 			}
 
-			tokens.push({
-				type: Tokens.NAME,
-				value,
-			});
+			tokens.push({type: Tokens.NAME, value});
 
 			continue;
 		}
 
-		throw new TypeError(`stupid baka syntax error at ${char} on line ${lineNr}`);
+		throw new TypeError(
+			`stupid baka syntax error at ${char} on line ${lineNr}`
+		);
 	}
 
 	return tokens;
