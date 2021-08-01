@@ -1,4 +1,4 @@
-import {parse} from "./parser";
+import {parse} from "./tokens";
 import {readFile} from "fs/promises";
 
 const stringify = (buffer: Buffer) => buffer.toString("utf-8");

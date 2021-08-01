@@ -74,11 +74,7 @@ function tokenizeLine(contents: string, lineNr: number) {
 				}
 
 				default: {
-					tokens.push({
-						type: Tokens.ASSIGNMENT,
-						value: "=",
-					});
-
+					tokens.push({type: Tokens.ASSIGNMENT, value: "="});
 					cursor++;
 					continue;
 				}
