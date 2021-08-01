@@ -1,12 +1,15 @@
-export enum Tokens {
-	NAME,
-	ASSIGNMENT,
-	NUMBER,
+export const enum Tokens {
+	NAME = "nam",
+	ASSIGNMENT = "ass",
+	NUMBER = "num",
+
+	// Operators
+	OPERATOR_ADD = "add",
 }
 
 export interface Token {
 	type: Tokens;
-	value: string;
+	value?: string;
 }
 
 function tokenizeLine(contents: string, lineNr: number) {
@@ -16,14 +19,13 @@ function tokenizeLine(contents: string, lineNr: number) {
 	while (cursor < contents.length) {
 		let char = contents[cursor];
 
-		if (
-			char === "(" ||
-			char === ")" ||
-			char === "," ||
-			char === "{" ||
-			char === "}" ||
-			char === "+"
-		) {
+		if (char === "+") {
+			cursor++;
+			tokens.push({ type: Tokens.OPERATOR_ADD });
+			continue;
+		}
+
+		if (char === "(" || char === ")" || char === "," || char === "{" || char === "}") {
 			cursor++;
 			continue;
 		}
