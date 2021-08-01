@@ -5,6 +5,7 @@ export const enum Tokens {
 
 	// Operators
 	OPERATOR_ADD = "add",
+	OPERATOR_SUBTRACT = "sub",
 }
 
 export interface Token {
@@ -18,6 +19,12 @@ function tokenizeLine(contents: string, lineNr: number) {
 
 	while (cursor < contents.length) {
 		let char = contents[cursor];
+
+		if (char === "-") {
+			cursor++;
+			tokens.push({ type: Tokens.OPERATOR_SUBTRACT });
+			continue;
+		}
 
 		if (char === "+") {
 			cursor++;
