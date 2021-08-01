@@ -1,6 +1,10 @@
 import { parse } from "./parser";
 import { readFile } from "fs/promises";
 
+const stringify = (buffer: Buffer) => buffer.toString("utf-8");
+
+// prettier-ignore
 readFile("./hello.ali")
-	.then(file => parse(file.toString("utf-8")))
-	.then(console.log);
+  .then(stringify)
+  .then(parse)
+  .then(console.log);
