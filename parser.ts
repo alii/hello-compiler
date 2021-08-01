@@ -12,7 +12,7 @@ export interface Token {
 	value?: string;
 }
 
-function tokenizeLine(contents: string, lineNr: number) {
+const tokenizeLine = (contents: string, lineNr: number) => {
 	const tokens: Token[] = [];
 	let cursor = 0;
 
@@ -105,7 +105,7 @@ function tokenizeLine(contents: string, lineNr: number) {
 	return tokens;
 }
 
-export function parse(file: string) {
+export const parse = (file: string) => {
 	const lines = file.split("\n");
 
 	const tokens: Token[] = [];
